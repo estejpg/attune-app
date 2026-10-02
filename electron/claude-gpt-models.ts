@@ -14,22 +14,24 @@ import { isDeepStrictEqual } from 'node:util';
 export const CLAUDE_GPT_MODELS_ATTUNEMENT_ID = 'claude-gpt-models';
 export const CLAUDE_GPT_MODELS_CONFIG_NAME = 'Attune: GPT Models';
 
+// Keep these synthetic IDs in sync with the runtime router. Their older
+// family-shaped names remain stable for saved Claude conversations.
 export const CLAUDE_GPT_MODELS = [
   {
     name: 'claude-opus-4-8-attune-sol',
-    labelOverride: 'GPT-5.6 Sol',
+    labelOverride: 'GPT-6 Astra',
     anthropicFamilyTier: 'opus',
     isFamilyDefault: true,
   },
   {
     name: 'claude-sonnet-4-8-attune-terra',
-    labelOverride: 'GPT-5.6 Terra',
+    labelOverride: 'GPT-6.1 Sol',
     anthropicFamilyTier: 'sonnet',
     isFamilyDefault: true,
   },
   {
     name: 'claude-haiku-4-8-attune-luna',
-    labelOverride: 'GPT-5.6 Luna',
+    labelOverride: 'GPT-6 Luna',
     anthropicFamilyTier: 'haiku',
     isFamilyDefault: true,
   },

@@ -43,6 +43,22 @@ from the bundled catalog, while user themes override matching catalog IDs.
 If the runtime is not built yet, either run `npm run build` in `../attune` or
 use the app's build button.
 
+### Model refresh in this fork
+
+This fork uses sibling checkouts of
+[`estejpg/attune`](https://github.com/estejpg/attune) and
+[`estejpg/attunements`](https://github.com/estejpg/attunements). Clone all three
+forks into the same parent directory before building or packaging the app.
+The app bundles its sibling runtime and catalog; the upstream siblings do not
+contain this model refresh.
+
+The ChatGPT desktop picker retains the models supplied by its installed Codex
+runtime and adds Claude Opus 5, Claude Fable 5, and Grok 4.7 through their
+authenticated local CLIs. The Claude desktop picker retains its native Claude
+models and adds GPT-6 Astra, GPT-6.1 Sol, and GPT-6 Luna through the local
+Codex bridge. Available models still depend on the user's provider account
+and installed CLI versions.
+
 ## Coding agent integrations
 
 Settings can install Attune's skill for ChatGPT, Cursor, and Claude. Each

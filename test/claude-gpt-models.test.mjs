@@ -538,8 +538,8 @@ test('toggle-off stops the bridge and keeps ordinary Claude launches native', as
 
 test('preserves the exact GPT aliases used by the runtime picker and router', () => {
   assert.deepEqual(CLAUDE_GPT_MODELS.map(({ name, labelOverride }) => [name, labelOverride]), [
-    ['claude-opus-4-8-attune-sol', 'GPT-5.6 Sol'],
-    ['claude-sonnet-4-8-attune-terra', 'GPT-5.6 Terra'],
-    ['claude-haiku-4-8-attune-luna', 'GPT-5.6 Luna'],
+    ['claude-opus-4-8-attune-sol', 'GPT-6 Astra'],
+    ['claude-sonnet-4-8-attune-terra', 'GPT-6.1 Sol'],
+    ['claude-haiku-4-8-attune-luna', 'GPT-6 Luna'],
   ]);
 });
