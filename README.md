@@ -1,6 +1,6 @@
 <p align="center">
-  <a href="https://github.com/Panchangam18/attune-app/releases/download/v0.1.23/Attune-0.1.23-mac-universal.dmg">
-    <img src="public/readme-icon.svg" width="144" alt="Download the latest Attune release for macOS">
+  <a href="https://github.com/estejpg/attune-app/releases">
+    <img src="public/readme-icon.svg" width="144" alt="View Attune releases for this fork">
   </a>
 </p>
 
@@ -51,6 +51,9 @@ This fork uses sibling checkouts of
 forks into the same parent directory before building or packaging the app.
 The app bundles its sibling runtime and catalog; the upstream siblings do not
 contain this model refresh.
+
+No installer has been published for this fork yet. The releases page above
+will show a DMG after a signed and notarized build is published.
 
 The ChatGPT desktop picker retains the models supplied by its installed Codex
 runtime and adds Claude Opus 5, Claude Fable 5, and Grok 4.7 through their
