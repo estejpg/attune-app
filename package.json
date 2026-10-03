@@ -15,6 +15,7 @@
     "start": "npm run build && electron .",
     "build:icon": "bash scripts/build-icon.sh",
     "package:mac": "npm run build && npm run build:runtime && npm run build:icon && electron-builder --mac dmg --universal --publish never",
+    "package:mac:local": "npm run build && npm run build:runtime && npm run build:icon && electron-builder --mac dmg --universal --publish never -c.mac.identity=- -c.mac.forceCodeSigning=false -c.mac.entitlements=build/entitlements.mac.local.plist -c.mac.entitlementsInherit=build/entitlements.mac.local.plist",
     "notarize:mac": "bash scripts/notarize-mac.sh",
     "release:mac": "npm run package:mac && npm run notarize:mac"
   },

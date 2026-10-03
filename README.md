@@ -55,6 +55,15 @@ contain this model refresh.
 No installer has been published for this fork yet. The releases page above
 will show a DMG after a signed and notarized build is published.
 
+For personal use on your own Mac, build a local DMG without an Apple Developer
+Program membership. Install dependencies in the `attune` and `attune-app`
+checkouts, then run `npm run package:mac:local` from `attune-app`. The DMG will
+be at `release/Attune-0.1.23-mac-universal.dmg`. This path uses an ad hoc
+signature and skips notarization; the regular `package:mac` and `release:mac`
+commands retain their Developer ID signing settings. The local app has the
+same name and bundle ID as upstream Attune, so copying it to Applications
+replaces an existing Attune installation there.
+
 The ChatGPT desktop picker retains the models supplied by its installed Codex
 runtime and adds Claude Opus 5, Claude Fable 5, and Grok 4.7 through their
 authenticated local CLIs. The Claude desktop picker retains its native Claude
