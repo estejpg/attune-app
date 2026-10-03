@@ -19,6 +19,7 @@ const scriptPath = fileURLToPath(new URL(
   import.meta.url,
 ));
 const script = readFileSync(scriptPath, 'utf8');
+const rowRole = process.env.ATTUNE_MODEL_MENU_ROLE || 'menuitem';
 const fixturePage = fileURLToPath(new URL(
   './external-model-menu.html',
   import.meta.url,
@@ -42,6 +43,12 @@ await window.webContents.insertCSS(stylesheet);
 const result = await window.webContents.executeJavaScript(`
   (async () => {
     const wait = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
+    const rowRole = ${JSON.stringify(rowRole)};
+    document.querySelectorAll('[role="menuitem"]').forEach((row) => {
+      row.setAttribute('role', rowRole);
+      row.tabIndex = 0;
+    });
+    if (rowRole === 'option') document.querySelector('#palette').setAttribute('role', 'listbox');
     window.__requests = [];
     window.__nativeClicks = [];
     const modelData = [
@@ -158,7 +165,8 @@ const result = await window.webContents.executeJavaScript(`
       window.__nativeClicks.push('cursor-agent');
       const replacement = document.createElement('div');
       replacement.id = 'cursor-selected';
-      replacement.setAttribute('role', 'menuitem');
+      replacement.setAttribute('role', rowRole);
+      replacement.tabIndex = 0;
       const label = document.createElement('div');
       const nativeLabel = document.createElement('span');
       nativeLabel.textContent = 'Cursor GPT-5.4';
@@ -173,7 +181,8 @@ const result = await window.webContents.executeJavaScript(`
       window.__nativeClicks.push('copilot-agent');
       const replacement = document.createElement('div');
       replacement.id = 'copilot-selected';
-      replacement.setAttribute('role', 'menuitem');
+      replacement.setAttribute('role', rowRole);
+      replacement.tabIndex = 0;
       const label = document.createElement('div');
       const nativeLabel = document.createElement('span');
       nativeLabel.textContent = 'Copilot Claude Sonnet 4.6';
@@ -226,6 +235,14 @@ const result = await window.webContents.executeJavaScript(`
       ))
     ) {
       throw new Error('Legacy browser-owned model state was not removed.');
+    }
+    let prematureSelections = 0;
+    cursor.addEventListener('pointerdown', () => { prematureSelections += 1; });
+    cursor.dispatchEvent(new PointerEvent('pointerdown', { bubbles: true, cancelable: true }));
+    cursor.click();
+    await wait(80);
+    if (prematureSelections || window.__nativeClicks.length) {
+      throw new Error('Opening the provider submenu selected the native parent prematurely.');
     }
     cursor.dispatchEvent(new PointerEvent('pointerenter'));
     await wait(80);
@@ -330,6 +347,15 @@ const result = await window.webContents.executeJavaScript(`
       throw new Error('A stale native model check remained beside the authoritative provider.');
     }
 
+    selectedCursor.dispatchEvent(new KeyboardEvent('keydown', { key: 'ArrowRight', bubbles: true }));
+    await wait(80);
+    if (!document.querySelector('.attune-provider-model-menu')?.contains(document.activeElement)) {
+      throw new Error('Keyboard opening did not focus a submenu model.');
+    }
+    document.activeElement.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    if (document.querySelector('.attune-provider-model-menu')) {
+      throw new Error('Escape did not close the provider submenu.');
+    }
     selectedCursor.dispatchEvent(new PointerEvent('pointerenter'));
     await wait(80);
     const reopenedMenu = document.querySelector('.attune-provider-model-menu');
