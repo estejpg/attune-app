@@ -12,24 +12,26 @@ const fixturePath = fileURLToPath(new URL(
   import.meta.url,
 ));
 
-test('external model submenu selects once and retains its CSS chevron', async () => {
-  const environment = { ...process.env };
-  delete environment.ELECTRON_RUN_AS_NODE;
-  const child = spawn(electronPath, [fixturePath], {
-    env: environment,
-    stdio: ['ignore', 'pipe', 'pipe'],
+for (const role of ['menuitem', 'menuitemradio', 'option']) {
+  test(`external model submenu supports ${role}, selects once and retains its CSS chevron`, async () => {
+    const environment = { ...process.env, ATTUNE_MODEL_MENU_ROLE: role };
+    delete environment.ELECTRON_RUN_AS_NODE;
+    const child = spawn(electronPath, [fixturePath], {
+      env: environment,
+      stdio: ['ignore', 'pipe', 'pipe'],
+    });
+    let stdout = '';
+    let stderr = '';
+    child.stdout.on('data', (chunk) => {
+      stdout += String(chunk);
+    });
+    child.stderr.on('data', (chunk) => {
+      stderr += String(chunk);
+    });
+    const exitCode = await new Promise((resolve, reject) => {
+      child.once('error', reject);
+      child.once('close', resolve);
+    });
+    assert.equal(exitCode, 0, `${stdout}\n${stderr}`);
   });
-  let stdout = '';
-  let stderr = '';
-  child.stdout.on('data', (chunk) => {
-    stdout += String(chunk);
-  });
-  child.stderr.on('data', (chunk) => {
-    stderr += String(chunk);
-  });
-  const exitCode = await new Promise((resolve, reject) => {
-    child.once('error', reject);
-    child.once('close', resolve);
-  });
-  assert.equal(exitCode, 0, `${stdout}\n${stderr}`);
-});
+}

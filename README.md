@@ -65,7 +65,7 @@ same name and bundle ID as upstream Attune, so copying it to Applications
 replaces an existing Attune installation there.
 
 The ChatGPT desktop picker retains the models supplied by its installed Codex
-runtime and adds Claude Opus 5, Claude Fable 5, and Grok 4.7 through their
+runtime and adds Claude Opus 5.5, Claude Fable 5.1, Claude Fable 5, and Grok 4.7 through their
 authenticated local CLIs. The Claude desktop picker retains its native Claude
 models and adds GPT-6 Astra, GPT-6.1 Sol, and GPT-6 Luna through the local
 Codex bridge. Available models still depend on the user's provider account
